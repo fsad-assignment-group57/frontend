@@ -1,0 +1,87 @@
+.login-parent{
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.login-form {
+    /* Glass Effect */
+    background: rgba(255, 255, 255, 0.21);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(7.6px);
+    -webkit-backdrop-filter: blur(7.6px);
+    border: 1px solid rgba(255, 255, 255, 0.34);
+    width: 33em;
+    padding-inline: 2em;
+    /* height: 23em; */
+}
+
+.login-parent h2{
+    text-align: center;
+    font-size: 2.5em;
+}
+
+.login-input-box {
+    width: 100%;
+    height: 3.4em;
+    margin-block: 2em;
+    position: relative;
+}
+
+.login-input-box input {
+    width: 90%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    outline: 2px solid gray;
+    border-radius: 8px;
+    color: whitesmoke;
+    padding-left: 3em;
+}
+
+.login-input-box input::placeholder {
+    color: whitesmoke;
+}
+
+.login-icon {
+    position:absolute;
+    top: 1em;
+    left: 0.5em;
+    color: whitesmoke;
+}
+
+.btn {
+    width: 100%;
+    height: 4em;
+    background-color: whitesmoke;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: black;
+    font-weight: 600;
+    border-radius: 40px;
+}
+
+.register-instead {
+    font-size: 0.9em;
+    text-align: center;
+}
+
+.register-instead p a {
+    color: whitesmoke;
+    font-weight: 600;
+    margin-bottom: 2%;
+    text-decoration: none;
+}
+
+.register-instead p a:hover {
+    color: whitesmoke;
+    font-weight: 600;
+    margin-bottom: 2%;
+
+}
