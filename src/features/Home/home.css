@@ -1,0 +1,38 @@
+.learnings-page {
+    width: 100%;
+    min-height: 10em;
+    /* From https://css.glass */
+    background: rgba(75, 63, 63, 0.41);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px dashed rgba(255, 255, 255, 0.88);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2em;
+}
+
+.no-learnings {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.resume-parent {
+    display: flex;
+    flex-direction: column;
+}
+
+.resume-course {
+    font-size: 3em;
+    color: white;
+}
+
+.add-course-label {
+    color: azure;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: underline;
+}

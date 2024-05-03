@@ -1,0 +1,38 @@
+.card-parent {
+    height: 20em;
+    width: 20em;
+    border: 1px solid white;
+    margin: 2%;
+    /* background: linear-gradient(-45deg, #262525, #3b3939,#4d4b4b,#616060) */
+   /* From https://css.glass */
+    background: rgba(49, 49, 49, 0.46);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(9px);
+    -webkit-backdrop-filter: blur(9px);
+    border: 1px solid rgba(49, 49, 49, 0.88);
+}
+
+.card-parent:hover{
+    transform: scale(1.09);
+}
+
+.card-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+    flex-direction: column;
+}
+
+.progress-bar {
+    position: relative;
+}
+
+.progress-label {
+    position: absolute;
+    left: 50%;
+    top: 2%;
+    font-weight: 600;
+    color: black;
+}   

@@ -22,8 +22,8 @@ function Login() {
     e.preventDefault();
     try{
       const res = await login(loginValue);
-      console.log("Login Response",res);
       authCtx.setToken(res.data)
+      console.log("Login Response",res, authCtx.isAuthenticated);
     } catch(err) {
       console.error("Authentication Failed","Please check your credentials");
     }
@@ -51,7 +51,7 @@ function Login() {
         </div>
         <button type='submit' className='btn'>Login</button>
         <div className="register-instead">
-          <p>Not registered?<a href="#"> Sign Up </a> instead</p>
+          <p>Not registered?<Link to="/signup"> Sign Up </Link> instead</p>
         </div>
       </form>
     </div>

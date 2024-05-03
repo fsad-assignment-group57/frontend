@@ -15,6 +15,7 @@ function AuthContextProvider({ children }) {
   function setToken(token) {
     setAuthToken(token.tokenType + token.accessToken);
   }
+
   const value = {
     token: authToken,
     isAuthenticated: !!authToken,
