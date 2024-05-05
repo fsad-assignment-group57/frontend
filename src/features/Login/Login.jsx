@@ -12,7 +12,7 @@ function Login() {
       password: "password",
   });
   const authCtx = useContext(AuthContext);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const handleChange = (e) => {
       const { name, value } = e.target;
       setLoginValues({ ...loginValue, [name]: value });
@@ -24,6 +24,9 @@ function Login() {
       const res = await login(loginValue);
       authCtx.setToken(res.data)
       console.log("Login Response",res, authCtx.isAuthenticated);
+      if(res.status == 200) {
+        navigate("/home")
+      }
     } catch(err) {
       console.error("Authentication Failed","Please check your credentials");
     }

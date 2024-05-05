@@ -12,8 +12,9 @@ function AuthContextProvider({ children }) {
   const [authToken, setAuthToken] = useState("");
   const [user, setUser] = useState();
 
-  function setToken(token) {
-    setAuthToken(token.tokenType + token.accessToken);
+  async function setToken(token) {
+    await setAuthToken(token.tokenType + token.accessToken);
+    console.log("Setting Token",authToken);
   }
 
   const value = {
