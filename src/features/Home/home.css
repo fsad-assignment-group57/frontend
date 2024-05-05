@@ -20,12 +20,13 @@
     font-weight: bold;
 }
 
-.resume-parent {
+.resume-parent-home {
     display: flex;
     flex-direction: column;
+    margin-inline: 1%;
 }
 
-.resume-course {
+.resume-course-home {
     font-size: 3em;
     color: white;
 }

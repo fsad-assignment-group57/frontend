@@ -4,6 +4,7 @@ import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgr
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
+import { useNavigate } from 'react-router-dom';
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme,value }) => ({
     height: 20,
@@ -17,9 +18,15 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme,value }) => ({
     },
   }));
 
-const CourseCard = ({Course,key}) => {
+const CourseCard = ({Course,key, userDetails}) => {
+  const navigate = useNavigate();
+
+  const navigateToCourse = () => {
+  navigate("/learnings", {state:{userDetails, Course}})
+  }
+
   return (
-    <div className='card-parent'>
+    <div className='card-parent' onClick={navigateToCourse}>
         <div className="card-title">
             <h1>{Course.name}</h1>
             <h3>({Course.name2})</h3>

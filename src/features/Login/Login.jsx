@@ -16,6 +16,7 @@ function Login() {
   const handleChange = (e) => {
       const { name, value } = e.target;
       setLoginValues({ ...loginValue, [name]: value });
+      
   }
 
   const handleSubmit = async (e) => {
@@ -25,7 +26,8 @@ function Login() {
       authCtx.setToken(res.data)
       console.log("Login Response",res, authCtx.isAuthenticated);
       if(res.status == 200) {
-        navigate("/home")
+        authCtx.setUser({username: loginValue.username});
+        navigate("/home");
       }
     } catch(err) {
       console.error("Authentication Failed","Please check your credentials");

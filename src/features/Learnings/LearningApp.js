@@ -12,11 +12,17 @@ import Stack from "@mui/material/Stack";
 import LabTabs from "./LabTabs";
 import React, { useState, useEffect } from "react";
 import './learning.css'
+import { useLocation } from "react-router-dom";
 
-function LearningApp(props) {
-  const [language, setLanguage] = useState("spanish");
-  const [userName, setUserName] = useState("XYZ11");
-  const [password, setPassword] = useState("xyz81");
+function LearningApp() {
+  const { state } = useLocation();
+  
+  const [language, setLanguage] = useState(state.Course.name2);
+  const [userName, setUserName] = useState(state.userDetails.username);
+
+  console.log("State: ", language, userName);
+
+  const [password, setPassword] = useState("xyz81"); //Do we need this? 
   const [data, setData] = useState(null);
   const [valid2, setValid2] = useState(true);
   const [valid3, setValid3] = useState(true);

@@ -17,10 +17,17 @@ function AuthContextProvider({ children }) {
     console.log("Setting Token",authToken);
   }
 
+  async function setUserDetails(userdetails) {
+    await setUser(userdetails);
+    console.log("Setting User",userdetails);
+  }
+
   const value = {
     token: authToken,
     isAuthenticated: !!authToken,
     setToken: setToken,
+    setUser: setUserDetails,
+    userDetails: user
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

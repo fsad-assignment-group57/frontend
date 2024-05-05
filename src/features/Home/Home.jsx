@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Header from '../../components/Header';
 import CourseCard from '../../components/CourseCard';
 import './home.css'
 import {useState} from 'react'
 import Chart from '../../components/Chart';
 import CourseSelect from '../CourseSelect/CourseSelect';
+import { AuthContext } from '../../store/context/Auth';
 
 const Home = () => {
     const [courses,setCourses] = useState([
@@ -19,24 +20,24 @@ const Home = () => {
             progress: 0
         },
         {
-            name: "Français",
-            name2: "french",
+            name: "Spanish",
+            name2: "spanish",
             progress: 50
         },
     ]);
     const [openModal, setOpenModal] = React.useState(false);
     const openLangSelectModal = () => setOpenModal(true);
     const closeLangSelectModal = () => setOpenModal(false);
-       
+    const authCtx = useContext(AuthContext);
     
     
   return (
     <>
-        <Header />
+        <Header userDetails={authCtx.userDetails} />
         {courses.length > 0 ? 
-            <div className="resume-parent">
+            <div className="resume-parent-home">
                 <br/>
-                <label className='resume-course'>Resume Course</label>
+                <label className='resume-course-home'>Resume Course</label>
                 <a className='add-course-label' onClick={openLangSelectModal}>Add Course</a>
             </div> : 
                 <>
@@ -49,7 +50,7 @@ const Home = () => {
                     <a className='add-course-label' onClick={openLangSelectModal}>Add Course</a>
                 </div> :
                 <>            
-                    {courses.map((course,i) => <CourseCard Course={course} key={i}/>)}
+                    {courses.map((course,i) => <CourseCard Course={course} key={i} userDetails={authCtx.userDetails}/>)}
                 </>
         }
         </div> 
