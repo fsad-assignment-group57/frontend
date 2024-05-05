@@ -1,0 +1,27 @@
+.no-learnings {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.resume-parent {
+    display: flex;
+    flex-direction: column;
+}
+
+.resume-course {
+    font-size: 2em;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+.add-course-label {
+    color: azure;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: underline;
+
+}

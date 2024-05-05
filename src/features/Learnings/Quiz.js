@@ -36,9 +36,9 @@ class Quiz extends Component {
       .then((json) => this.setState({ sampleQ: json }))
       .catch((error) => console.error(error));
 
-    fetch("http://localhost:8081/FSAD/getQuiz/"+this.props.level+"/"+this.props.language)
+   // fetch("http://localhost:8081/FSAD/getQuiz/"+this.props.level+"/"+this.props.language)
+   fetch("http://localhost:8087/api/v1/languages_quiz/"+this.props.level+"/"+this.props.language)
       .then((response) => response.json())
-
       .then((json) => this.setState({ questionBank: json }))
       .catch((error) => console.error(error));
     // this.setState({ questionBank :qBank });
@@ -78,7 +78,7 @@ class Quiz extends Component {
       this.state;
     return (
       <div className="App d-flex flex-column align-items-center justify-content-center">
-       Hi {this.props.user} , Welcome to Quiz {this.props.level} for language {this.props.language}
+       {/* Hi {this.props.user} , Welcome to Quiz {this.props.level} for language {this.props.language} "/}
         {/*Hi :::{this.state.questionBank} <br/>
                 Bye :::: {this.state.sampleQ}*/}
         {!quizEnd && questionBank ? (

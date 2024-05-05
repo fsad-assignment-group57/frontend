@@ -13,8 +13,11 @@ import Quiz from "./Quiz";
 export default function LabTabs(props) {
   const [value, setValue] = React.useState("1");
   const [data, setData] = useState(null);
+  const [token, setToken] = useState(null);
   const [videos, setVideos] = useState(null);
+  const [sentenceFormations, setSentenceFormations] = useState(null);
   const user = props.user;
+  const password = props.password;
   const language = props.language;
   const level = props.level;
   const content = [
@@ -88,22 +91,64 @@ export default function LabTabs(props) {
 
   useEffect(() => {
     {
-      /*fetch('https://catfact.ninja/fact')
-      .then(response => response.json())
-      .then(json => setData(json))
-  .catch(error => console.error(error));*/
+      fetch("http://localhost:8087/FSAD/getLevel/" + user + "/" + language)
+        .then((response) => response.json())
+        .then((json) => setData(json))
+        .catch((error) => console.error(error));
     }
-    setData(content);
-    setVideos(videoLinks);
+
+    getContent();
+
+    getVideoLinks();
+
+    getSentence();
+   
   }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+ 
+
+  function getContent() {
+ 
+    fetch("http://localhost:8087/api/v1/languages_structure/"+ level + "/"+ language)
+        .then((response) => response.json())
+        .then((json) => setData(json))
+        .catch((error) => console.error(error));
+    //    setData(content);
+
+
+  }
+
+  function getVideoLinks() {
+ 
+    fetch("http://localhost:8087/api/v1/youtubeLink/"+ level + "/"+language)
+        .then((response) => response.json())
+        .then((json) => setVideos(json))
+        .catch((error) => console.error(error));
+    //    setVideos(videoLinks);
+
+
+  }
+
+  function getSentence() {
+ 
+    fetch("http://localhost:8087/api/v1/sentence/"+ level + "/"+language)
+        .then((response) => response.json())
+        .then((json) => setSentenceFormations(json))
+        .catch((error) => console.error(error));
+    //    setVideos(videoLinks);
+
+
+  }
+
+  
+
   return (
     <Box sx={{ width: "100%", typography: "body1" }}>
-      Hi {user}, Welcomt to level {level} of {language}
+      {/* Hello {user}, Welcome to level {level} of {language}*/ }
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example">
@@ -124,15 +169,15 @@ export default function LabTabs(props) {
               </tr>
               {data.map((item, i) => (
                 <tr key={i}>
-                  <td>{item.english} &nbsp; &nbsp; &nbsp; </td>
+                  <td>{item.english_word} &nbsp; &nbsp; &nbsp; </td>
                   <td>
                     {" "}
-                    {item.name} &nbsp; &nbsp; &nbsp;{" "}
+                    {item.language_word} &nbsp; &nbsp; &nbsp;{" "}
                     <button>
                       {" "}
                       <img src={MyImage} />
                       <Speech
-                        text={item.ePrononuce}
+                        text={item.word_spell_in_english}
                         pitch="1"
                         rate="1"
                         volume="3"
@@ -157,7 +202,7 @@ export default function LabTabs(props) {
                     {" "}
                     {video.description}
                     <YouTube
-                      videoId={video.link}
+                      videoId={video.link_youtube_word}
                       opts={opts}
                       height="200"
                       width="640"
@@ -170,16 +215,16 @@ export default function LabTabs(props) {
 
         <TabPanel value="3">
           <div>
-            {sentences ? (
+            {sentenceFormations ? (
               <tbody>
                 <tr>
                   <th></th>
                   <th></th>
                 </tr>
-                {sentences.map((sentence, i) => (
+                {sentenceFormations.map((sentence, i) => (
                   <tr key={i}>
-                    <td> {sentence.english} &nbsp; &nbsp; &nbsp; </td>
-                    <td> {sentence.name} </td>
+                    <td> {sentence.english_word} &nbsp; &nbsp; &nbsp; </td>
+                    <td> {sentence.language_word} </td>
                   </tr>
                 ))}
               </tbody>

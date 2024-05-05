@@ -11,10 +11,12 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import LabTabs from "./LabTabs";
 import React, { useState, useEffect } from "react";
+import './learning.css'
 
 function LearningApp(props) {
-  const [language, setLanguage] = useState("Hindi");
-  const [user, setUserName] = useState("sowmith");
+  const [language, setLanguage] = useState("spanish");
+  const [userName, setUserName] = useState("XYZ11");
+  const [password, setPassword] = useState("xyz81");
   const [data, setData] = useState(null);
   const [valid2, setValid2] = useState(true);
   const [valid3, setValid3] = useState(true);
@@ -25,7 +27,7 @@ function LearningApp(props) {
       .then((json) => setData(json))
       .catch((error) => console.error(error));
 
-      fetch("http://localhost:8081/FSAD/getLevel/"+user+"/"+language)
+      fetch("http://localhost:8081/FSAD/getLevel/"+userName+"/"+language)
       .then((response) => response.json())
 
       .then((json) => {setValid2(json.level2) ; setValid3(json.level3)})
@@ -91,7 +93,7 @@ function LearningApp(props) {
       </Accordion.Item>
     </Accordion>
     </div>*/}
-    Hi {user} , Welcome to {language} Learning
+    <label className='resume-course'>Hi {userName} , Welcome to {language} Learning</label>
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -102,11 +104,11 @@ function LearningApp(props) {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            <LabTabs language= {language} user={user} level = "1" />
+            <LabTabs language= {language} user={userName} password={password} level = "1" />
           </Typography>
         </AccordionDetails>
       </Accordion>
-      {valid2 ? (
+      {true ? (
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
@@ -117,7 +119,7 @@ function LearningApp(props) {
           </AccordionSummary>
           <AccordionDetails>
           <Typography>
-            <LabTabs  language= {language} user={user} level = "2" />
+            <LabTabs  language= {language} user={userName} password={password} level = "2" />
           </Typography>
         </AccordionDetails>
         </Accordion>
@@ -128,12 +130,12 @@ function LearningApp(props) {
             aria-controls="panel3-content"
             id="panel3-header"
           >
-            <Typography>Level 2 Intermediate</Typography>
+            <Typography className="resume-course">Level 2 Intermediate</Typography>
           </AccordionSummary>
        
         </Accordion>
       )}
-      {valid3 ? (
+      {true ? (
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
@@ -144,7 +146,7 @@ function LearningApp(props) {
           </AccordionSummary>
           <AccordionDetails>
           <Typography>
-            <LabTabs language= {language} user={user} level = "3"  />
+            <LabTabs language= {language} user={userName} password={password} level = "3"  />
           </Typography>
         </AccordionDetails>
         </Accordion>
@@ -155,7 +157,7 @@ function LearningApp(props) {
             aria-controls="panel3-content"
             id="panel3-header"
           >
-            <Typography>Level 3 Advance</Typography>
+            <Typography className="resume-course">Level 3 Advance</Typography>
           </AccordionSummary>
        
         </Accordion>
