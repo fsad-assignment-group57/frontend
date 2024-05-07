@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext,useEffect } from 'react'
 import Header from '../../components/Header';
 import CourseCard from '../../components/CourseCard';
 import './home.css'
@@ -6,30 +6,52 @@ import {useState} from 'react'
 import Chart from '../../components/Chart';
 import CourseSelect from '../CourseSelect/CourseSelect';
 import { AuthContext } from '../../store/context/Auth';
+import { getRegisteredCourses , addCourses} from './api/home';
+import BasicTable from '../../components/Table';
 
 const Home = () => {
     const [courses,setCourses] = useState([
-        {
-            name: "English",
-            name2: "english",
-            progress: 83
-        },
-        {
-            name: "हिंदी",
-            name2: "hindi",
-            progress: 0
-        },
-        {
-            name: "Spanish",
-            name2: "spanish",
-            progress: 50
-        },
+        // {
+        //     name: "English",
+        //     name2: "english",
+        //     progress: 83
+        // },
+        // {
+        //     name: "हिंदी",
+        //     name2: "hindi",
+        //     progress: 0
+        // },
+        // {
+        //     name: "Spanish",
+        //     name2: "spanish",
+        //     progress: 50
+        // },
     ]);
     const [openModal, setOpenModal] = React.useState(false);
     const openLangSelectModal = () => setOpenModal(true);
     const closeLangSelectModal = () => setOpenModal(false);
     const authCtx = useContext(AuthContext);
     
+    useEffect(()=> {
+        async function fetchRegisteredCourses() {
+            const res = await getRegisteredCourses(4);
+            let temparr = [];
+            res.data.languages.forEach(ele => {
+                temparr.push({name:ele, name2:ele, progress:0})
+            });
+            setCourses(temparr);
+        }
+
+        fetchRegisteredCourses();
+    },[])
+
+    const addNewCourse = (language) => {
+        setCourses([...courses, {name: language, name2: language, progress:0}]);
+        let languages = [];
+        courses.forEach(ele => languages.push(ele.name2));
+        languages.push(language.toLowerCase())
+        addCourses(4, languages);
+    }
     
   return (
     <>
@@ -54,12 +76,17 @@ const Home = () => {
                 </>
         }
         </div> 
+        <br />
         <div className="stats">
-            <div className="chart">
-                {/* <Chart /> */}
+            <div className="streak-info">
+                <h1>Daily Streak: {10}</h1>
+            </div>
+            <div className="table-parent">
+            <BasicTable />
             </div>
         </div>
-        <CourseSelect open ={openModal} handleClose={closeLangSelectModal}/>
+        <br />
+        <CourseSelect open ={openModal} handleClose={closeLangSelectModal} addCourse={addNewCourse}/>
     </>
   )
 }

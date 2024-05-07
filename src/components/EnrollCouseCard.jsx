@@ -2,8 +2,6 @@ import React from 'react'
 import './EnrollCourseCard.css'
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme,value }) => ({
     height: 20,
@@ -16,8 +14,8 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme,value }) => ({
       background: `linear-gradient(90deg, #d61515 ${100 - value}%, #15d629 100%)`
     },
   }));
-
-const EnrollCourseCard = ({Course,key}) => {
+  
+const EnrollCourseCard = ({Course,key,addCourse}) => {
   return (
     <div className='enr-card-parent'>
         <div className="enr-card-title">
@@ -25,7 +23,7 @@ const EnrollCourseCard = ({Course,key}) => {
             <h3>({Course.name2})</h3>
         </div>
         <div className="enrolled">
-            {Course.enrolled ? <label>Enroll</label> : <label>Enrolled. Go to Course</label> }
+            {Course.enrolled ? <label onClick={() => addCourse(Course.name)}>Enroll</label> : <label>Enrolled. Go to Course</label> }
         </div>
     </div>
   )

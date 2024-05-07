@@ -8,7 +8,7 @@ import "./CourseSelect.css";
 
 let courseListTemp;
 
-const CourseSelect = ({handleClose,open}) => {
+const CourseSelect = ({handleClose,open,addCourse}) => {
     const [courseList, setCourseList] = useState([
         {
             name: "English",
@@ -74,7 +74,7 @@ const CourseSelect = ({handleClose,open}) => {
             {courseList.length== 0 ? 
                 <label className='no-learnings'>Loading Courses...</label> :
                 <>            
-                    {courseList.map((course,i) => <EnrollCourseCard Course={course} key={i}/>)}
+                    {courseList.map((course,i) => <EnrollCourseCard Course={course} key={i} addCourse={addCourse}/>)}
                 </>}
             </div>
           

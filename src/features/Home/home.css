@@ -37,3 +37,31 @@
     cursor: pointer;
     text-decoration: underline;
 }
+
+.table-parent {
+    margin-inline: 2%;
+    margin-block: 1%;
+    width: 40%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.streak-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    color: white;
+}
+
+.streak-info h1 {
+    width: 100%;
+    text-align: center;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-between;
+
+}
