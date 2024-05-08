@@ -13,6 +13,7 @@ class Quiz extends Component {
       score: 0,
       quizEnd: false,
       sampleQ: "",
+      totalQuestions: 0
     };
   }
 
@@ -52,7 +53,8 @@ class Quiz extends Component {
   };
 
   handleNextQuestion = () => {
-    const { questionBank, currentQuestion } = this.state;
+    const { questionBank, currentQuestion, selectedOption, score } = this.state;
+    this.setState({totalQuestions : this.state.totalQuestions + 1});
     if (currentQuestion + 1 < questionBank.length) {
       this.setState((prevState) => ({
         currentQuestion: prevState.currentQuestion + 1,
@@ -62,12 +64,13 @@ class Quiz extends Component {
       this.setState({
         quizEnd: true,
       });
-      this.submitQuiz();
+      if(questionBank.length==score+1 && selectedOption === questionBank[currentQuestion].answer)
+        this.submitQuiz();
     }
   };
 
   submitQuiz = () => {
-    fetch('http://localhost:8081/FSAD/updateLevel/'+this.props.level+"/"+this.props.language+"/"+this.props.user, {
+    fetch('http://localhost:8087/api/v1/userlevel/'+this.props.user+"/"+this.props.level+"/"+this.props.language, {
         method: 'post',
         headers: {'Content-Type':'application/json'}
        });
@@ -92,6 +95,8 @@ class Quiz extends Component {
           <Score
             score={score}
             onNextQuestion={this.handleNextQuestion}
+            totalQuestions={this.state.totalQuestions}
+            level={this.props.level}
             className="score"
           />
         )}

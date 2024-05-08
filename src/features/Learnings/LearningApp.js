@@ -24,8 +24,8 @@ function LearningApp() {
 
   const [password, setPassword] = useState("xyz81"); //Do we need this? 
   const [data, setData] = useState(null);
-  const [valid2, setValid2] = useState(true);
-  const [valid3, setValid3] = useState(true);
+  const [valid2, setValid2] = useState(false);
+  const [valid3, setValid3] = useState(false);
 
   useEffect(() => {
     fetch("https://catfact.ninja/fact")
@@ -33,10 +33,18 @@ function LearningApp() {
       .then((json) => setData(json))
       .catch((error) => console.error(error));
 
-      fetch("http://localhost:8081/FSAD/getLevel/"+userName+"/"+language)
+      fetch("http://localhost:8087/api/v1/getUserLevel/"+userName+"/"+language)
       .then((response) => response.json())
 
-      .then((json) => {setValid2(json.level2) ; setValid3(json.level3)})
+      .then((json) => {
+        if (json==2){
+          setValid2(true);
+           setValid3(true);
+        }else if (json==1){
+          setValid2(true);
+        }
+
+        })
       .catch((error) => console.error(error));
 
     /*setValid2(false);
@@ -114,7 +122,7 @@ function LearningApp() {
           </Typography>
         </AccordionDetails>
       </Accordion>
-      {true ? (
+      {valid2 ? (
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
@@ -141,7 +149,7 @@ function LearningApp() {
        
         </Accordion>
       )}
-      {true ? (
+      {valid3 ? (
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
