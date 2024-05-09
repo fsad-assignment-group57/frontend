@@ -38,7 +38,7 @@ class Quiz extends Component {
       .catch((error) => console.error(error));
 
    // fetch("http://localhost:8081/FSAD/getQuiz/"+this.props.level+"/"+this.props.language)
-   fetch("http://localhost:8087/api/v1/languages_quiz/"+this.props.level+"/"+this.props.language)
+   fetch("http://localhost:8080/api/v1/languages_quiz/"+this.props.level+"/"+this.props.language)
       .then((response) => response.json())
       .then((json) => this.setState({ questionBank: json }))
       .catch((error) => console.error(error));
@@ -70,7 +70,7 @@ class Quiz extends Component {
   };
 
   submitQuiz = () => {
-    fetch('http://localhost:8087/api/v1/userlevel/'+this.props.user+"/"+this.props.level+"/"+this.props.language, {
+    fetch('http://localhost:8080/api/v1/userlevel/'+this.props.user+"/"+this.props.level+"/"+this.props.language, {
         method: 'post',
         headers: {'Content-Type':'application/json'}
        });

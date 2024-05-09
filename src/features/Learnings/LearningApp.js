@@ -33,7 +33,7 @@ function LearningApp() {
       .then((json) => setData(json))
       .catch((error) => console.error(error));
 
-      fetch("http://localhost:8087/api/v1/getUserLevel/"+userName+"/"+language)
+      fetch("http://localhost:8080/api/v1/getUserLevel/"+userName+"/"+language)
       .then((response) => response.json())
 
       .then((json) => {

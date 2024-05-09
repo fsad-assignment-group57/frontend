@@ -5,53 +5,73 @@ import { styled, css } from '@mui/system';
 import { Modal as BaseModal } from '@mui/base/Modal';
 import EnrollCourseCard from '../../components/EnrollCouseCard';
 import "./CourseSelect.css";
+import { getAllCourses } from './api/course_select';
 
 let courseListTemp;
 
-const CourseSelect = ({handleClose,open,addCourse}) => {
+const CourseSelect = ({handleClose,open,addCourse, courses}) => {
     const [courseList, setCourseList] = useState([
-        {
-            name: "English",
-            name2: "english",
-            enrolled: true
-        },
-        {
-            name: "हिंदी",
-            name2: "hindi",
-            enrolled: false
-        },
-        {
-            name: "Français",
-            name2: "french",
-            enrolled: true
-        },
-        {
-            name: "Malayalam",
-            name2: "malayalam",
-            enrolled: true
-        },
-        {
-            name: "Tamil",
-            name2: "Tamil",
-            enrolled: true
-        },{
-            name: "Telugu",
-            name2: "Tamil",
-            enrolled: true
-        }
+        // {
+        //     name: "English",
+        //     name2: "english",
+        //     enrolled: true
+        // },
+        // {
+        //     name: "हिंदी",
+        //     name2: "hindi",
+        //     enrolled: false
+        // },
+        // {
+        //     name: "Français",
+        //     name2: "french",
+        //     enrolled: true
+        // },
+        // {
+        //     name: "Malayalam",
+        //     name2: "malayalam",
+        //     enrolled: true
+        // },
+        // {
+        //     name: "Tamil",
+        //     name2: "Tamil",
+        //     enrolled: true
+        // },{
+        //     name: "Telugu",
+        //     name2: "Tamil",
+        //     enrolled: true
+        // }
     ]);
 
+    function checkIfEnrolled(name) {
+      for(let ele of courses){
+        if(ele.name2.toLowerCase() == name.toLowerCase()){
+          return false;
+        }
+      }
+      return true;
+    }
+
     useEffect(() => {
-      courseListTemp = [...courseList];
-      console.log("Copy array", courseListTemp)
+      (async () => {
+        let courses = await getAllCourses();
+        let courseTemp = [];
+        courses.data.forEach(ele => {
+          courseTemp.push({
+            name: ele.languages,
+            name2: ele.languages,
+            enrolled: checkIfEnrolled(ele.languages)
+          })
+        });
+        await setCourseList(courseTemp);
+        courseListTemp = [...courseTemp]
+      })();
     },[]);
 
     const filterCourseList = (event) => {
-      console.log("Lists", courseList, courseListTemp);
       if(event.target.value == undefined || event.target.value == null){
         setCourseList(...courseListTemp);
       } else {
-        let temp = courseListTemp.filter((ele) => {return ele.name2.includes(event.target.value)})
+        let temp = courseListTemp.filter((ele) => {return ele.name2.toLowerCase().includes(event.target.value.toLowerCase())})
         setCourseList(temp)
       }
       

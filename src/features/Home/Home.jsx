@@ -3,11 +3,10 @@ import Header from '../../components/Header';
 import CourseCard from '../../components/CourseCard';
 import './home.css'
 import {useState} from 'react'
-import Chart from '../../components/Chart';
 import CourseSelect from '../CourseSelect/CourseSelect';
 import { AuthContext } from '../../store/context/Auth';
-import { getRegisteredCourses , addCourses} from './api/home';
 import BasicTable from '../../components/Table';
+import { getUserLevelForCourse, getLeaderboard , getRegisteredCourses , addCourses} from './api/home'
 
 const Home = () => {
     const [courses,setCourses] = useState([
@@ -27,22 +26,33 @@ const Home = () => {
         //     progress: 50
         // },
     ]);
-    const [openModal, setOpenModal] = React.useState(false);
+
+    const [openModal, setOpenModal] = useState(false);
+    const [leaderboard, setLeaderboard] = useState([]);
     const openLangSelectModal = () => setOpenModal(true);
     const closeLangSelectModal = () => setOpenModal(false);
     const authCtx = useContext(AuthContext);
     
     useEffect(()=> {
-        async function fetchRegisteredCourses() {
-            const res = await getRegisteredCourses(4);
-            let temparr = [];
-            res.data.languages.forEach(ele => {
-                temparr.push({name:ele, name2:ele, progress:0})
-            });
-            setCourses(temparr);
-        }
+        (async () => {
+            try {
+                const res = await getRegisteredCourses(authCtx.userDetails.username);
+                let temparr = [];
+                for(let ele of res.data.languages){
+                    let progress = await getUserLevelForCourse(authCtx.userDetails.username, ele);
+                    temparr.push({name:ele, name2:ele, progress:(+progress.data/3*100).toFixed(2)})
+                };
+                setCourses(temparr);
+            } catch (err) {
+                console.error("ERROR | ",err);
+                setCourses([])
+            }
+        })();
 
-        fetchRegisteredCourses();
+        (async () => {
+            setLeaderboard((await getLeaderboard()).data)
+        })();
+
     },[])
 
     const addNewCourse = (language) => {
@@ -50,7 +60,7 @@ const Home = () => {
         let languages = [];
         courses.forEach(ele => languages.push(ele.name2));
         languages.push(language.toLowerCase())
-        addCourses(4, languages);
+        addCourses(authCtx.userDetails.username, languages);
     }
     
   return (
@@ -82,11 +92,11 @@ const Home = () => {
                 <h1>Daily Streak: {10}</h1>
             </div>
             <div className="table-parent">
-            <BasicTable />
+            <BasicTable leaderboard={leaderboard}/>
             </div>
         </div>
         <br />
-        <CourseSelect open ={openModal} handleClose={closeLangSelectModal} addCourse={addNewCourse}/>
+        <CourseSelect open ={openModal} handleClose={closeLangSelectModal} addCourse={addNewCourse} courses={courses}/>
     </>
   )
 }

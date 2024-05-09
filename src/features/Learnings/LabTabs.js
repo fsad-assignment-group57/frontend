@@ -91,7 +91,7 @@ export default function LabTabs(props) {
 
   useEffect(() => {
     {
-      fetch("http://localhost:8087/FSAD/getLevel/" + user + "/" + language)
+      fetch("http://localhost:8080/FSAD/getLevel/" + user + "/" + language)
         .then((response) => response.json())
         .then((json) => setData(json))
         .catch((error) => console.error(error));
@@ -113,7 +113,7 @@ export default function LabTabs(props) {
 
   function getContent() {
  
-    fetch("http://localhost:8087/api/v1/languages_structure/"+ level + "/"+ language)
+    fetch("http://localhost:8080/api/v1/languages_structure/"+ level + "/"+ language)
         .then((response) => response.json())
         .then((json) => setData(json))
         .catch((error) => console.error(error));
@@ -124,7 +124,7 @@ export default function LabTabs(props) {
 
   function getVideoLinks() {
  
-    fetch("http://localhost:8087/api/v1/youtubeLink/"+ level + "/"+language)
+    fetch("http://localhost:8080/api/v1/youtubeLink/"+ level + "/"+language)
         .then((response) => response.json())
         .then((json) => setVideos(json))
         .catch((error) => console.error(error));
@@ -135,7 +135,7 @@ export default function LabTabs(props) {
 
   function getSentence() {
  
-    fetch("http://localhost:8087/api/v1/sentence/"+ level + "/"+language)
+    fetch("http://localhost:8080/api/v1/sentence/"+ level + "/"+language)
         .then((response) => response.json())
         .then((json) => setSentenceFormations(json))
         .catch((error) => console.error(error));
@@ -196,7 +196,7 @@ export default function LabTabs(props) {
 
         <TabPanel value="2">
           <div>
-            {data
+            {videos
               ? videos.map((video) => (
                   <div>
                     {" "}
