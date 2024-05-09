@@ -13,7 +13,7 @@ class Quiz extends Component {
       score: 0,
       quizEnd: false,
       sampleQ: "",
-      totalQuestions: 0
+      totalQuestions: 0,
     };
   }
 
@@ -32,13 +32,16 @@ class Quiz extends Component {
   }
 
   UserList() {
-    fetch("https://catfact.ninja/fact")
-      .then((response) => response.json())
-      .then((json) => this.setState({ sampleQ: json }))
-      .catch((error) => console.error(error));
+   
 
-   // fetch("http://localhost:8081/FSAD/getQuiz/"+this.props.level+"/"+this.props.language)
-   fetch("http://localhost:8080/api/v1/languages_quiz/"+this.props.level+"/"+this.props.language)
+    // fetch("http://localhost:8081/FSAD/getQuiz/"+this.props.level+"/"+this.props.language)
+    fetch(
+      "http://localhost:8080/api/v1/languages_quiz/" + this.props.level + "/" +  this.props.language,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json",         Authorization : this.props.token},
+      }
+    )
       .then((response) => response.json())
       .then((json) => this.setState({ questionBank: json }))
       .catch((error) => console.error(error));
@@ -54,7 +57,7 @@ class Quiz extends Component {
 
   handleNextQuestion = () => {
     const { questionBank, currentQuestion, selectedOption, score } = this.state;
-    this.setState({totalQuestions : this.state.totalQuestions + 1});
+    this.setState({ totalQuestions: this.state.totalQuestions + 1 });
     if (currentQuestion + 1 < questionBank.length) {
       this.setState((prevState) => ({
         currentQuestion: prevState.currentQuestion + 1,
@@ -64,33 +67,34 @@ class Quiz extends Component {
       this.setState({
         quizEnd: true,
       });
-      if(questionBank.length==score+1 && selectedOption === questionBank[currentQuestion].answer)
-        this.submitQuiz();
+      if (
+        questionBank.length == score + 1 &&
+        selectedOption === questionBank[currentQuestion].answer
+      )
+        this.props.submitQuiz(this.props.level);
     }
   };
 
-  submitQuiz = () => {
-    fetch('http://localhost:8080/api/v1/userlevel/'+this.props.user+"/"+this.props.level+"/"+this.props.language, {
-        method: 'post',
-        headers: {'Content-Type':'application/json'}
-       });
-  }
+  
 
   render() {
     const { questionBank, currentQuestion, selectedOption, score, quizEnd } =
       this.state;
     return (
       <div className="App d-flex flex-column align-items-center justify-content-center">
-       {/* Hi {this.props.user} , Welcome to Quiz {this.props.level} for language {this.props.language} "/}
+        {/* Hi {this.props.user} , Welcome to Quiz {this.props.level} for language {this.props.language} "/}
         {/*Hi :::{this.state.questionBank} <br/>
                 Bye :::: {this.state.sampleQ}*/}
         {!quizEnd && questionBank ? (
-          <Question
-            question={questionBank[currentQuestion]}
-            selectedOption={selectedOption}
-            onOptionChange={this.handleOptionChange}
-            onSubmit={this.handleFormSubmit}
-          />
+          <div>
+            Answer all questions to clear quiz
+            <Question
+              question={questionBank[currentQuestion]}
+              selectedOption={selectedOption}
+              onOptionChange={this.handleOptionChange}
+              onSubmit={this.handleFormSubmit}
+            />
+          </div>
         ) : (
           <Score
             score={score}

@@ -4,11 +4,12 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Speech from "react-speech";
 import MyImage from "./img/google.png";
 import YouTube, { YouTubeProps } from "react-youtube";
 import Quiz from "./Quiz";
+import { AuthContext } from "../../store/context/Auth";
 
 export default function LabTabs(props) {
   const [value, setValue] = React.useState("1");
@@ -58,6 +59,8 @@ export default function LabTabs(props) {
     },
   ];
 
+  const authCtx = useContext(AuthContext);
+
   const videoLinks = [
     {
       description: "Learn Hindi from HindiPod10 ",
@@ -91,10 +94,6 @@ export default function LabTabs(props) {
 
   useEffect(() => {
     {
-      fetch("http://localhost:8080/FSAD/getLevel/" + user + "/" + language)
-        .then((response) => response.json())
-        .then((json) => setData(json))
-        .catch((error) => console.error(error));
     }
 
     getContent();
@@ -102,53 +101,63 @@ export default function LabTabs(props) {
     getVideoLinks();
 
     getSentence();
-   
   }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
- 
-
   function getContent() {
- 
-    fetch("http://localhost:8080/api/v1/languages_structure/"+ level + "/"+ language)
-        .then((response) => response.json())
-        .then((json) => setData(json))
-        .catch((error) => console.error(error));
+    fetch(
+      "http://localhost:8080/api/v1/languages_structure/" + level + "/" + language,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json", // Indicates JSON data
+          Authorization: authCtx.token, // Example authorization header
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => console.error(error));
     //    setData(content);
-
-
   }
 
   function getVideoLinks() {
- 
-    fetch("http://localhost:8080/api/v1/youtubeLink/"+ level + "/"+language)
-        .then((response) => response.json())
-        .then((json) => setVideos(json))
-        .catch((error) => console.error(error));
+    fetch(
+      "http://localhost:8080/api/v1/youtubeLink/" + level + "/" + language,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json", // Indicates JSON data
+          Authorization: authCtx.token, // Example authorization header
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((json) => setVideos(json))
+      .catch((error) => console.error(error));
     //    setVideos(videoLinks);
-
-
   }
 
   function getSentence() {
- 
-    fetch("http://localhost:8080/api/v1/sentence/"+ level + "/"+language)
-        .then((response) => response.json())
-        .then((json) => setSentenceFormations(json))
-        .catch((error) => console.error(error));
+    fetch("http://localhost:8080/api/v1/sentence/" + level + "/" + language, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json", // Indicates JSON data
+        Authorization: authCtx.token, // Example authorization header
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => setSentenceFormations(json))
+      .catch((error) => console.error(error));
     //    setVideos(videoLinks);
-
-
   }
-
-  
 
   return (
     <Box sx={{ width: "100%", typography: "body1" }}>
-      {/* Hello {user}, Welcome to level {level} of {language}*/ }
+      {/* Hello {user}, Welcome to level {level} of {language}*/}
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example">
@@ -235,7 +244,7 @@ export default function LabTabs(props) {
         </TabPanel>
 
         <TabPanel value="4">
-          <Quiz level={level} language={language} user={user} />
+          <Quiz level={level} language={language} user={user} token={authCtx.token} submitQuiz={props.submitQuiz}  />
         </TabPanel>
       </TabContext>
     </Box>

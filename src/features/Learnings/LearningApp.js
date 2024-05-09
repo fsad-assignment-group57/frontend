@@ -10,15 +10,20 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import LabTabs from "./LabTabs";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import './learning.css'
 import { useLocation } from "react-router-dom";
+import Header from '../../components/Header';
+import { AuthContext } from '../../store/context/Auth';
+
 
 function LearningApp() {
   const { state } = useLocation();
   
   const [language, setLanguage] = useState(state.Course.name2);
   const [userName, setUserName] = useState(state.userDetails.username);
+
+  const authCtx = useContext(AuthContext);
 
   console.log("State: ", language, userName);
 
@@ -28,28 +33,47 @@ function LearningApp() {
   const [valid3, setValid3] = useState(false);
 
   useEffect(() => {
-    fetch("https://catfact.ninja/fact")
-      .then((response) => response.json())
-      .then((json) => setData(json))
-      .catch((error) => console.error(error));
+    fetchUserLevel();
 
-      fetch("http://localhost:8080/api/v1/getUserLevel/"+userName+"/"+language)
-      .then((response) => response.json())
-
-      .then((json) => {
-        if (json==2){
-          setValid2(true);
-           setValid3(true);
-        }else if (json==1){
-          setValid2(true);
-        }
-
-        })
-      .catch((error) => console.error(error));
 
     /*setValid2(false);
     setValid3(false);*/
   }, []);
+
+  const fetchUserLevel = () => {
+    
+    fetch("http://localhost:8080/api/v1/getUserLevel/"+userName+"/"+language,{
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json', // Indicates JSON data
+        'Authorization': authCtx.token, // Example authorization header
+      },
+    }
+
+    )
+   .then((response) => response.json())
+
+    .then((json) => {
+      if (json>=2 ){
+        setValid2(true);
+         setValid3(true);
+      }else if (json==1){
+        setValid2(true);
+      }
+
+      })
+    .catch((error) => console.error(error));
+  }
+
+  const submitQuiz = (level) => {
+    fetch(
+      "http://localhost:8080/api/v1/userlevel/" + userName + "/" + level + "/" +language,
+      {
+        method: "post",
+        headers: { "Content-Type": "application/json" ,  Authorization : authCtx.token  },
+      }
+    ).then((response) =>     fetchUserLevel()  );
+  };
 
   return (
     <div className="App">
@@ -107,6 +131,8 @@ function LearningApp() {
       </Accordion.Item>
     </Accordion>
     </div>*/}
+            <Header userDetails={authCtx.userDetails} />
+
     <label className='resume-course'>Hi {userName} , Welcome to {language} Learning</label>
       <Accordion>
         <AccordionSummary
@@ -118,7 +144,7 @@ function LearningApp() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            <LabTabs language= {language} user={userName} password={password} level = "1" />
+            <LabTabs language= {language} user={userName} password={password} submitQuiz={submitQuiz}  level = "1" />
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -133,7 +159,7 @@ function LearningApp() {
           </AccordionSummary>
           <AccordionDetails>
           <Typography>
-            <LabTabs  language= {language} user={userName} password={password} level = "2" />
+            <LabTabs  language= {language} user={userName} password={password} submitQuiz={submitQuiz}  level = "2" />
           </Typography>
         </AccordionDetails>
         </Accordion>
@@ -144,7 +170,7 @@ function LearningApp() {
             aria-controls="panel3-content"
             id="panel3-header"
           >
-            <Typography className="resume-course">Level 2 Intermediate</Typography>
+            <Typography className="resume-course">Level 2 Intermediate (Complete Previous Levels to unlock)</Typography>
           </AccordionSummary>
        
         </Accordion>
@@ -160,7 +186,7 @@ function LearningApp() {
           </AccordionSummary>
           <AccordionDetails>
           <Typography>
-            <LabTabs language= {language} user={userName} password={password} level = "3"  />
+            <LabTabs language= {language} user={userName} password={password} submitQuiz={submitQuiz} level = "3"  />
           </Typography>
         </AccordionDetails>
         </Accordion>
@@ -171,7 +197,7 @@ function LearningApp() {
             aria-controls="panel3-content"
             id="panel3-header"
           >
-            <Typography className="resume-course">Level 3 Advance</Typography>
+            <Typography className="resume-course">Level 3 Advance (Complete Previous Levels to Unlock)</Typography>
           </AccordionSummary>
        
         </Accordion>
