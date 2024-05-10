@@ -24,3 +24,20 @@ export const login = async (usernameAndPassword) => {
         throw e;
     }
 }
+
+export const signup = async (usernameAndPassword) => {
+    try {
+        let {username,password} = {...usernameAndPassword}
+        usernameAndPassword = {
+            'username':username,
+            'password':password
+        }
+        let response =  await axios.post(
+            `${URL}/auth/register`,
+            usernameAndPassword,config
+        );
+        return response;
+    } catch (e) {
+        throw e;
+    }
+}

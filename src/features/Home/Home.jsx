@@ -96,7 +96,7 @@ const Home = () => {
             </div>
         </div>
         <br />
-        <CourseSelect open ={openModal} handleClose={closeLangSelectModal} addCourse={addNewCourse} courses={courses}/>
+        {courses.length > 0 && <CourseSelect open ={openModal} handleClose={closeLangSelectModal} addCourse={addNewCourse} courses={courses}/>}
     </>
   )
 }
