@@ -92,7 +92,7 @@ const Home = () => {
         <br />
         <div className="stats">
             <div className="streak-info">
-                <h1>Daily Streak: {10}</h1>
+                <h1>Daily Streak: {0}</h1>
             </div>
             <div className="table-parent">
             <BasicTable leaderboard={leaderboard}/>

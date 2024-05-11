@@ -8,8 +8,8 @@ import { AuthContext } from '../../store/context/Auth';
 
 function Login() {    
   const [loginValue, setLoginValues] = useState({
-      username: "sowmith",
-      password: "Sowmi@123",
+      username: "",
+      password: "",
   });
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();

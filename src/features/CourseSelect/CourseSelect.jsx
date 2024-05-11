@@ -46,7 +46,7 @@ const CourseSelect = ({handleClose,open,addCourse, courses}) => {
 
     function checkIfEnrolled(name) {
       for(let ele of courses){
-        if(ele.name2.toLowerCase() == name.toLowerCase()){
+        if(ele.name.toLowerCase() == name.toLowerCase()){
           return false;
         }
       }
@@ -67,13 +67,13 @@ const CourseSelect = ({handleClose,open,addCourse, courses}) => {
         await setCourseList(courseTemp);
         courseListTemp = [...courseTemp]
       })();
-    },[]);
+    },[courses]);
 
     const filterCourseList = (event) => {
       if(event.target.value == undefined || event.target.value == null){
         setCourseList(...courseListTemp);
       } else {
-        let temp = courseListTemp.filter((ele) => {return ele.name2.toLowerCase().includes(event.target.value.toLowerCase())})
+        let temp = courseListTemp.filter((ele) => {return ele.name.toLowerCase().includes(event.target.value.toLowerCase())})
         setCourseList(temp)
       }
       
