@@ -31,6 +31,7 @@ function Login() {
       }
     } catch(err) {
       console.error("Authentication Failed","Please check your credentials");
+      alert("Authentication Failed !! Please check your credentials");
     }
   }
 
