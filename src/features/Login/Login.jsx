@@ -8,8 +8,8 @@ import { AuthContext } from '../../store/context/Auth';
 
 function Login() {    
   const [loginValue, setLoginValues] = useState({
-      username: "testuser1",
-      password: "password",
+      username: "sowmith",
+      password: "Sowmi@123",
   });
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
@@ -35,30 +35,33 @@ function Login() {
   }
 
   return (
-    <div className='login-parent'>
-      <form className="login-form" onSubmit={handleSubmit}>
-        <h2 style={{color:'whitesmoke'}}>Login</h2>
-        <div className="login-input-box">
-          <input type="text" placeholder='Username'
-          name="username"
-          value={loginValue.username} 
-          onChange={handleChange}
-          required/>
-          <div className='login-icon'><PersonIcon /></div>
-        </div>
-        <div className="login-input-box">
-          <input type="password" placeholder='Password' 
-          name="password"
-          value={loginValue.password} 
-          onChange={handleChange}
-          required/>
-          <div className='login-icon'><LockIcon /></div>
-        </div>
-        <button type='submit' className='btn'>Login</button>
-        <div className="register-instead">
-          <p>Not registered?<Link to="/signup"> Sign Up </Link> instead</p>
-        </div>
-      </form>
+    <div>
+      <p className='login-parent-center'>Welcome to QucikLearn!!<br/> QucikLearn is a language-learning platform that offers courses in various languages through exercises, quizzes, and interactive lessons. </p>
+      <div className='login-parent'>
+        <form className="login-form" onSubmit={handleSubmit}>
+          <h2 style={{color:'whitesmoke'}}>Login</h2>
+          <div className="login-input-box">
+            <input type="text" placeholder='Username'
+            name="username"
+            value={loginValue.username} 
+            onChange={handleChange}
+            required/>
+            <div className='login-icon'><PersonIcon /></div>
+          </div>
+          <div className="login-input-box">
+            <input type="password" placeholder='Password' 
+            name="password"
+            value={loginValue.password} 
+            onChange={handleChange}
+            required/>
+            <div className='login-icon'><LockIcon /></div>
+          </div>
+          <button type='submit' className='btn'>Login</button>
+          <div className="register-instead">
+            <p>Not registered?<Link to="/signup"> Sign Up </Link> instead</p>
+          </div>
+        </form>
+      </div>
     </div>
   )
 }

@@ -3,8 +3,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 70vh;
 }
+
+.login-parent-center{
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 30px;
+    color: whitesmoke;
+    font-size: 2.5em;
+    text-align: center;
+}
+
 
 .login-form {
     /* Glass Effect */
