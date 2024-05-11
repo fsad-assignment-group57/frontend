@@ -191,7 +191,7 @@ export default function LabTabs(props) {
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example">
-            <Tab label="Content" value="1" />
+            <Tab label="Word Learning" value="1" />
             <Tab label="Video Links" value="2" />
             <Tab label="Sentence Creation" value="3" />
             <Tab label="Quiz" value="4" />
