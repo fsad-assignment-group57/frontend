@@ -1,13 +1,23 @@
 import axios from 'axios';
 
 const URL = `http://localhost:5001`;
-const URL2 = `http://localhost:8080/api/v1`;
-const config = {
+const URL2 = ``;
+
+const getCongfig = (token) => {return {
     headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+        "Authorization" : token,
+        "Access-Control-Allow-Origin": "http://localhost:8080",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        "Host": "localhost:8080",
+        "Connection": "keep-alive",
+        "Access-Control-Request-Method": "*",
+        "Origin": "http://localhost:3000",
+        "Access-Control-Request-Headers": "access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,allow,content-type",
+        "Accept": "*/*",
+        "Accept-Language": "en-GB,en;q=0.9,en-US;q=0.8,da;q=0.7",
+        "Accept-Encoding": "gzip, deflate, br"
     }
-  };
+  };}
 
 export const getRegisteredCourses = async (user_id) => {
     try {
@@ -20,10 +30,11 @@ export const getRegisteredCourses = async (user_id) => {
     }
 }
 
-export const getUserLevelForCourse = async (username,language) => {
+export const getUserLevelForCourse = async (username,language,token) => {
     try {
         let response =  await axios.get(
-            `${URL2}/getUserLevel/${username}/${language}`,
+            `${URL2}/getUserLevel/${username}/${language}`, 
+            getCongfig(token)
         );
         return response;
     } catch (e) {
@@ -46,10 +57,11 @@ export const addCourses = async (user_id, languages) => {
     }
 }
 
-export const getLeaderboard = async () => {
+export const getLeaderboard = async (token) => {
     try {
         let response =  await axios.get(
             `${URL2}/getUserPoints`,
+            getCongfig(token)
         );
         return response;
     } catch (e) {

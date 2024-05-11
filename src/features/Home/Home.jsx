@@ -32,25 +32,28 @@ const Home = () => {
     const openLangSelectModal = () => setOpenModal(true);
     const closeLangSelectModal = () => setOpenModal(false);
     const authCtx = useContext(AuthContext);
-    
+    const [loading, setLoading] = useState(false);
+
     useEffect(()=> {
         (async () => {
             try {
                 const res = await getRegisteredCourses(authCtx.userDetails.username);
                 let temparr = [];
                 for(let ele of res.data.languages){
-                    let progress = await getUserLevelForCourse(authCtx.userDetails.username, ele);
+                    let progress = await getUserLevelForCourse(authCtx.userDetails.username, ele,authCtx.token);
                     temparr.push({name:ele, name2:ele, progress:(+progress.data/3*100).toFixed(2)})
                 };
                 setCourses(temparr);
+                setLoading(true);
             } catch (err) {
                 console.error("ERROR | ",err);
                 setCourses([])
+                setLoading(true);
             }
         })();
 
         (async () => {
-            setLeaderboard((await getLeaderboard()).data)
+            setLeaderboard((await getLeaderboard(authCtx.token)).data)
         })();
 
     },[])
@@ -96,7 +99,7 @@ const Home = () => {
             </div>
         </div>
         <br />
-        {courses.length > 0 && <CourseSelect open ={openModal} handleClose={closeLangSelectModal} addCourse={addNewCourse} courses={courses}/>}
+        {loading > 0 && <CourseSelect open ={openModal} handleClose={closeLangSelectModal} addCourse={addNewCourse} courses={courses}/>}
     </>
   )
 }

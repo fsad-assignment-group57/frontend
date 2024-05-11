@@ -1,17 +1,21 @@
 import axios from 'axios';
 
-const URL = `http://localhost:8080`;
-const config = {
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-    }
-  };
+// const URL = `http://localhost:8080`;
+const URL = ``;
 
-export const getAllCourses = async () => {
+const getCongfig = (token) => {return {
+    headers: {
+        "Authorization" : token,
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+    }
+  };}
+
+export const getAllCourses = async (token) => {
     try {
         let response =  await axios.get(
-            `${URL}/api/v1/languages`,
+            `${URL}/languages`,
+            getCongfig(token)
         );
         return response;
     } catch (e) {

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { styled, css } from '@mui/system';
@@ -6,10 +6,12 @@ import { Modal as BaseModal } from '@mui/base/Modal';
 import EnrollCourseCard from '../../components/EnrollCouseCard';
 import "./CourseSelect.css";
 import { getAllCourses } from './api/course_select';
+import { AuthContext } from '../../store/context/Auth';
 
 let courseListTemp;
 
 const CourseSelect = ({handleClose,open,addCourse, courses}) => {
+    const authContext = useContext(AuthContext);
     const [courseList, setCourseList] = useState([
         // {
         //     name: "English",
@@ -53,7 +55,7 @@ const CourseSelect = ({handleClose,open,addCourse, courses}) => {
 
     useEffect(() => {
       (async () => {
-        let courses = await getAllCourses();
+        let courses = await getAllCourses(authContext.token);
         let courseTemp = [];
         courses.data.forEach(ele => {
           courseTemp.push({
