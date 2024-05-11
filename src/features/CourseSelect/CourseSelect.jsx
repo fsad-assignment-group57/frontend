@@ -60,7 +60,7 @@ const CourseSelect = ({handleClose,open,addCourse, courses}) => {
         courses.data.forEach(ele => {
           courseTemp.push({
             name: ele.languages,
-            name2: ele.languages,
+            name2: ele.nativeLanguage,
             enrolled: checkIfEnrolled(ele.languages)
           })
         });

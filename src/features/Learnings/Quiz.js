@@ -36,10 +36,22 @@ class Quiz extends Component {
 
     // fetch("http://localhost:8081/FSAD/getQuiz/"+this.props.level+"/"+this.props.language)
     fetch(
-      "http://localhost:8080/api/v1/languages_quiz/" + this.props.level + "/" +  this.props.language,
+      "languages_quiz/" + this.props.level + "/" +  this.props.language,
       {
         method: "GET",
-        headers: { "Content-Type": "application/json",         Authorization : this.props.token},
+        headers: { "Content-Type": "application/json",         
+        Authorization : this.props.token,
+        "Access-Control-Allow-Origin": "http://localhost:8080",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        "Host": "localhost:8080",
+        "Connection": "keep-alive",
+        "Access-Control-Request-Method": "*",
+        "Origin": "http://localhost:3000",
+        "Access-Control-Request-Headers": "access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,allow,content-type",
+        "Accept": "*/*",
+        "Accept-Language": "en-GB,en;q=0.9,en-US;q=0.8,da;q=0.7",
+        "Accept-Encoding": "gzip, deflate, br"
+        },
       }
     )
       .then((response) => response.json())

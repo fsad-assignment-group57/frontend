@@ -42,11 +42,21 @@ function LearningApp() {
 
   const fetchUserLevel = () => {
     
-    fetch("http://localhost:8080/api/v1/getUserLevel/"+userName+"/"+language,{
+    fetch("/getUserLevel/"+userName+"/"+language,{
       method: 'GET',
       headers: {
         'Content-Type': 'application/json', // Indicates JSON data
-        'Authorization': authCtx.token, // Example authorization header
+        'Authorization': authCtx.token, // Example authorization header,
+        "Access-Control-Allow-Origin": "http://localhost:8080",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        "Host": "localhost:8080",
+        "Connection": "keep-alive",
+        "Access-Control-Request-Method": "*",
+        "Origin": "http://localhost:3000",
+        "Access-Control-Request-Headers": "access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,allow,content-type",
+        "Accept": "*/*",
+        "Accept-Language": "en-GB,en;q=0.9,en-US;q=0.8,da;q=0.7",
+        "Accept-Encoding": "gzip, deflate, br"
       },
     }
 
@@ -67,10 +77,22 @@ function LearningApp() {
 
   const submitQuiz = (level) => {
     fetch(
-      "http://localhost:8080/api/v1/userlevel/" + userName + "/" + level + "/" +language,
+      "/userlevel/" + userName + "/" + level + "/" +language,
       {
         method: "post",
-        headers: { "Content-Type": "application/json" ,  Authorization : authCtx.token  },
+        headers: { "Content-Type": "application/json" ,
+        "Authorization" : authCtx.token ,
+        "Access-Control-Allow-Origin": "http://localhost:8080",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        "Host": "localhost:8080",
+        "Connection": "keep-alive",
+        "Access-Control-Request-Method": "*",
+        "Origin": "http://localhost:3000",
+        "Access-Control-Request-Headers": "access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,allow,content-type",
+        "Accept": "*/*",
+        "Accept-Language": "en-GB,en;q=0.9,en-US;q=0.8,da;q=0.7",
+        "Accept-Encoding": "gzip, deflate, br"
+         },
       }
     ).then((response) =>     fetchUserLevel()  );
   };

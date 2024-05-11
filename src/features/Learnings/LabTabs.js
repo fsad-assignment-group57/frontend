@@ -109,12 +109,22 @@ export default function LabTabs(props) {
 
   function getContent() {
     fetch(
-      "http://localhost:8080/api/v1/languages_structure/" + level + "/" + language,
+      "/languages_structure/" + level + "/" + language,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json", // Indicates JSON data
           Authorization: authCtx.token, // Example authorization header
+        "Access-Control-Allow-Origin": "http://localhost:8080",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        "Host": "localhost:8080",
+        "Connection": "keep-alive",
+        "Access-Control-Request-Method": "*",
+        "Origin": "http://localhost:3000",
+        "Access-Control-Request-Headers": "access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,allow,content-type",
+        "Accept": "*/*",
+        "Accept-Language": "en-GB,en;q=0.9,en-US;q=0.8,da;q=0.7",
+        "Accept-Encoding": "gzip, deflate, br"
         },
       }
     )
@@ -126,12 +136,22 @@ export default function LabTabs(props) {
 
   function getVideoLinks() {
     fetch(
-      "http://localhost:8080/api/v1/youtubeLink/" + level + "/" + language,
+      "/youtubeLink/" + level + "/" + language,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json", // Indicates JSON data
           Authorization: authCtx.token, // Example authorization header
+        "Access-Control-Allow-Origin": "http://localhost:8080",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        "Host": "localhost:8080",
+        "Connection": "keep-alive",
+        "Access-Control-Request-Method": "*",
+        "Origin": "http://localhost:3000",
+        "Access-Control-Request-Headers": "access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,allow,content-type",
+        "Accept": "*/*",
+        "Accept-Language": "en-GB,en;q=0.9,en-US;q=0.8,da;q=0.7",
+        "Accept-Encoding": "gzip, deflate, br"
         },
       }
     )
@@ -142,11 +162,21 @@ export default function LabTabs(props) {
   }
 
   function getSentence() {
-    fetch("http://localhost:8080/api/v1/sentence/" + level + "/" + language, {
+    fetch("/sentence/" + level + "/" + language, {
       method: "GET",
       headers: {
         "Content-Type": "application/json", // Indicates JSON data
-        Authorization: authCtx.token, // Example authorization header
+        "Authorization" : authCtx.token ,
+        "Access-Control-Allow-Origin": "http://localhost:8080",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        "Host": "localhost:8080",
+        "Connection": "keep-alive",
+        "Access-Control-Request-Method": "*",
+        "Origin": "http://localhost:3000",
+        "Access-Control-Request-Headers": "access-control-allow-credentials,access-control-allow-methods,access-control-allow-origin,allow,content-type",
+        "Accept": "*/*",
+        "Accept-Language": "en-GB,en;q=0.9,en-US;q=0.8,da;q=0.7",
+        "Accept-Encoding": "gzip, deflate, br"
       },
     })
       .then((response) => response.json())

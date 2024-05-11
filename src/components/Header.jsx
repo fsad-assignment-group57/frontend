@@ -7,8 +7,36 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import AdbIcon from '@mui/icons-material/Adb';
+import { useNavigate } from 'react-router-dom';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+
 
 function ResponsiveAppBar({userDetails}) {
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const navigate = useNavigate();
+  const settings = [ 'Logout'];
+
+  const handleClick = () => {
+    // Navigate to a different route when a button is clicked
+    navigate('/home');
+  };
+
+  const handleLogout = () => {
+    // Navigate to a different route when a button is clicked
+    navigate('/login');
+  };
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -18,7 +46,7 @@ function ResponsiveAppBar({userDetails}) {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            onClick={handleClick}
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -37,7 +65,7 @@ function ResponsiveAppBar({userDetails}) {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            onClick={handleClick}
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -55,13 +83,13 @@ function ResponsiveAppBar({userDetails}) {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <IconButton sx={{ p: 0 }}>
-              <Avatar alt="Remy Sharp" />
-              <Typography
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" /> 
+                <Typography
                 variant="h6"
                 noWrap
                 component="a"
-                href="#app-bar-with-responsive-menu"
                 sx={{
                   mr: 2,
                   display: { xs: 'none', md: 'flex' },
@@ -74,8 +102,30 @@ function ResponsiveAppBar({userDetails}) {
               >
               {userDetails.username}
             </Typography>
-
-            </IconButton>
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center" onClick={handleLogout}>{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
           </Box>
         </Toolbar>
       </Container>
